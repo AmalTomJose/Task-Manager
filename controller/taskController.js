@@ -1,6 +1,5 @@
 const Task = require("../models/Task");
 
-// CREATE TASK
 exports.createTask = async (req, res) => {
   try {
     const task = await Task.create({
@@ -14,21 +13,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// GET USER TASKS (IMPORTANT FILTER)
-// exports.getTasks = async (req, res) => {
-//   try {
-//     const tasks = await Task.find({
-//       user: req.user.id,
-//       isDeleted: false,
-//     });
 
-//     res.json(tasks);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// UPDATE STATUS
 exports.updateTask = async (req, res) => {
   try {
     console.log('Hii');
@@ -45,7 +30,6 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// SOFT DELETE (IMPORTANT)
 exports.deleteTask = async (req, res) => {
   try {
     await Task.findOneAndUpdate(
