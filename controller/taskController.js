@@ -8,36 +8,38 @@ exports.createTask = async (req, res) => {
       user: req.user.id,
     });
 
-    res.status(201).json(task);
+    res.redirect("/dashboard");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 // GET USER TASKS (IMPORTANT FILTER)
-exports.getTasks = async (req, res) => {
-  try {
-    const tasks = await Task.find({
-      user: req.user.id,
-      isDeleted: false,
-    });
+// exports.getTasks = async (req, res) => {
+//   try {
+//     const tasks = await Task.find({
+//       user: req.user.id,
+//       isDeleted: false,
+//     });
 
-    res.json(tasks);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+//     res.json(tasks);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 // UPDATE STATUS
 exports.updateTask = async (req, res) => {
   try {
+    console.log('Hii');
+    console.log(req.body);
     const task = await Task.findOneAndUpdate(
       { _id: req.params.id, user: req.user.id },
       { status: req.body.status },
       { new: true }
     );
 
-    res.json(task);
+    res.redirect("/dashboard");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -51,8 +53,9 @@ exports.deleteTask = async (req, res) => {
       { isDeleted: true }
     );
 
-    res.json({ message: "Task deleted" });
-  } catch (err) {
+    res.redirect("/dashboard");
+
+e  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };

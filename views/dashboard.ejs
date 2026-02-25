@@ -6,7 +6,7 @@
 <body>
     <h2>Your Tasks</h2>
 
-    <form action="/tasks" method="POST">
+    <form action="/api/tasks" method="POST">
         <input type="text" name="title" placeholder="New Task" required />
         <button type="submit">Add Task</button>
     </form>
@@ -18,19 +18,19 @@
             <strong><%= task.title %></strong>
             - <%= task.status %>
 
-            <form action="/tasks/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
+            <form action="/api/tasks/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
                 <input type="hidden" name="status" value="<%= task.status === 'pending' ? 'completed' : 'pending' %>">
                 <button type="submit">Toggle</button>
             </form>
 
-            <form action="/tasks/<%= task._id %>?_method=DELETE" method="POST" style="display:inline;">
+            <form action="/api/tasks/<%= task._id %>?_method=DELETE" method="POST" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>
         </div>
         <br>
     <% }) %>
 
-    <form action="/logout" method="POST">
+    <form action="/api/auth/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
 </body>

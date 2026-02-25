@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -15,23 +15,12 @@ exports.signup = async (req, res) => {
       password: hashed,
     });
 
-    res.redirect("/login");
+    res.render("login",{message:'successull signup, please login'});
 
 } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
-exports.loginPage = async (req, res) => {
-    try{
-        res.render("login");
-
-
-    }
-    catch(err){
-        res.status(500).json({ message: err.message });
-    }
-}
 
 
 // LOGIN
@@ -41,11 +30,11 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user)
-      return res.status(400).json({ message: "Invalid credentials" });
+        return res.render('login',{message:"Invalid credentials"});
 
     const match = await bcrypt.compare(password, user.password);
     if (!match)
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.render('login',{message:"Invalid credentials"});
     console.log(process.env.JWT_SECRET);
 
     const token = jwt.sign(
@@ -62,7 +51,6 @@ res.redirect("/dashboard");
   }
 };
 
-// LOGOUT (BONUS)
 exports.logout = (req, res) => {
   res.clearCookie("token");
 res.redirect("/login");

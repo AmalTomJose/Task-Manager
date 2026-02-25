@@ -6,16 +6,51 @@
 <body>
     <h2>Signup</h2>
 
-    <form action="/api/auth/signup" method="POST">
+    <% if (message) { %>
+        <p style="color:red;"><%= message %></p>
+    <% } %>
+
+    <form action="/api/auth/signup" method="POST" onsubmit="return validateForm()">
         <input type="text" name="name" placeholder="Name" required />
         <br><br>
+
         <input type="email" name="email" placeholder="Email" required />
         <br><br>
-        <input type="password" name="password" placeholder="Password" required />
+
+        <input type="password" id="password" name="password" placeholder="Password" required />
         <br><br>
+
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required />
+        <br><br>
+
+        <p id="error" style="color:red;"></p>
+
         <button type="submit">Signup</button>
     </form>
 
     <p>Already have an account? <a href="/login">Login</a></p>
+
+<script>
+function validateForm() {
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const error = document.getElementById("error");
+
+    error.innerText = "";
+
+    if (password.length < 8) {
+        error.innerText = "Password must be at least 8 characters";
+        return false;
+    }
+
+    if (password !== confirmPassword) {
+        error.innerText = "Passwords do not match";
+        return false;
+    }
+
+    return true;
+}
+</script>
+
 </body>
 </html>

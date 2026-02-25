@@ -28,8 +28,8 @@ app.use("/api/tasks", require("./routes/taskRoutes"));
 
 app.get("/", (req, res) => res.redirect("/login"));
 
-app.get("/signup", (req, res) => res.render("signup"));
-app.get("/login", (req, res) => res.render("login"));
+app.get("/signup", (req, res) => res.render("signup",{message:''}));
+app.get("/login", (req, res) => res.render("login",{message:""}));
 
 app.get("/dashboard", authMiddleware, async (req, res) => {
   const tasks = await Task.find({
